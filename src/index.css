@@ -1,0 +1,618 @@
+@import 'tailwindcss';
+
+/* ============================================================================
+   LunaTerraMars Analog Explorer — space-mission dark theme
+   Palette contrast targets WCAG AA (>= 4.5:1) against --color-void.
+   ========================================================================== */
+
+@theme {
+  /* Surfaces */
+  --color-void: #05070f;
+  --color-abyss: #080d18;
+  --color-panel: #0d1422;
+  --color-elevated: #121c2d;
+  --color-hairline: #1e2b45;
+  --color-hairline-strong: #2d3f5e;
+
+  /* Type */
+  --color-ink: #e8eef9;
+  --color-ink-muted: #aab8cf;
+  --color-ink-dim: #8194b2;
+
+  /* Accents */
+  --color-plasma: #38bdf8;
+  --color-plasma-deep: #0284c7;
+  --color-solar: #f5c451;
+  --color-terra: #3b82f6;
+  --color-lunar: #9ca3af;
+  --color-regolith: #c1440e;
+  --color-signal-green: #34d399;
+  --color-signal-cyan: #22d3ee;
+  --color-signal-red: #f87171;
+  --color-signal-orange: #fb923c;
+
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+:root {
+  /* Semantic aliases consumed by canvas/SVG renderers outside Tailwind. */
+  --space-bg: var(--color-void);
+  --space-surface: var(--color-panel);
+  --space-surface-raised: var(--color-elevated);
+  --space-border: var(--color-hairline);
+  --space-border-strong: var(--color-hairline-strong);
+  --space-text: var(--color-ink);
+  --space-text-muted: var(--color-ink-muted);
+  --space-text-dim: var(--color-ink-dim);
+  --space-accent: var(--color-plasma);
+  --space-accent-deep: var(--color-plasma-deep);
+  --space-gold: var(--color-solar);
+  --space-green: var(--color-signal-green);
+  --space-cyan: var(--color-signal-cyan);
+  --space-orange: var(--color-signal-orange);
+  --space-red: var(--color-signal-red);
+
+  color-scheme: dark;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-hairline-strong) var(--color-abyss);
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: var(--color-void);
+    /* Faint nebular glow keeps the dark theme from reading as flat black. */
+    background-image:
+      radial-gradient(
+        ellipse 80% 55% at 50% -10%,
+        rgb(56 189 248 / 0.1),
+        transparent 62%
+      ),
+      radial-gradient(
+        ellipse 65% 45% at 88% 2%,
+        rgb(193 68 14 / 0.09),
+        transparent 58%
+      );
+    background-attachment: fixed;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: rgb(56 189 248 / 0.32);
+    color: var(--color-ink);
+  }
+
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-plasma);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Restore an accessible cursor and tap target for disabled controls. */
+  :where(button, [role='button']):disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}
+
+/* ============================================================================
+   Star field
+   A tiled, non-interactive layer of radial-gradient specks sits behind all
+   content (z-index: -1) so the dark theme reads as deep space rather than a
+   flat fill. Three tile sizes keep the repeat from forming a visible grid, and
+   the whole layer disappears in print.
+   ========================================================================== */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+  background-image:
+    radial-gradient(1.1px 1.1px at 18px 26px, rgb(232 238 249 / 0.9), transparent 100%),
+    radial-gradient(1.3px 1.3px at 132px 78px, rgb(170 216 255 / 0.75), transparent 100%),
+    radial-gradient(1px 1px at 86px 154px, rgb(232 238 249 / 0.55), transparent 100%),
+    radial-gradient(1.6px 1.6px at 196px 118px, rgb(245 196 81 / 0.35), transparent 100%),
+    radial-gradient(1px 1px at 48px 196px, rgb(232 238 249 / 0.45), transparent 100%),
+    radial-gradient(1.2px 1.2px at 240px 32px, rgb(200 225 255 / 0.5), transparent 100%);
+  background-size:
+    260px 260px,
+    260px 260px,
+    260px 260px,
+    410px 410px,
+    190px 190px,
+    260px 260px;
+  background-repeat: repeat;
+}
+
+/* ============================================================================
+   Dark-theme scrollbars (WebKit + Firefox)
+   ========================================================================== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hairline-strong) var(--color-abyss);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-abyss);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-hairline-strong);
+  border: 2px solid var(--color-abyss);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3c5278;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #4c6692;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: var(--color-abyss);
+}
+
+/* ============================================================================
+   Motion preferences
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   Leaflet dark theme
+   NASA GIBS and Trek tiles are rendered unmodified; only chrome, popups and
+   controls are restyled so they remain legible against the mission theme.
+   ========================================================================== */
+
+.leaflet-container {
+  background-color: var(--color-abyss);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  outline: none;
+}
+
+.leaflet-container a {
+  color: var(--color-plasma);
+}
+
+.leaflet-container .leaflet-control-attribution {
+  display: none !important;
+}
+
+.leaflet-container .leaflet-control-attribution a {
+  color: var(--color-ink-muted);
+}
+
+.leaflet-bar {
+  overflow: hidden;
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.45);
+}
+
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  border-bottom-color: var(--color-hairline);
+}
+
+.leaflet-bar a {
+  background-color: var(--color-panel);
+  color: var(--color-ink);
+}
+
+.leaflet-bar a:hover {
+  background-color: var(--color-elevated);
+  color: var(--color-plasma);
+}
+
+.leaflet-bar a.leaflet-disabled {
+  background-color: var(--color-abyss);
+  color: var(--color-ink-dim);
+}
+
+.leaflet-bar a:last-child {
+  border-bottom: 0;
+}
+
+.leaflet-popup-content-wrapper {
+  border: 1px solid var(--color-hairline-strong);
+  border-radius: 12px;
+  background-color: var(--color-panel);
+  color: var(--color-ink);
+  box-shadow: 0 18px 42px rgb(0 0 0 / 0.6);
+}
+
+.leaflet-popup-tip {
+  background-color: var(--color-panel);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.45);
+}
+
+.leaflet-popup-content {
+  width: 268px !important;
+  margin: 12px 14px;
+  line-height: 1.5;
+}
+
+.leaflet-popup-content p {
+  margin: 0;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  top: 6px;
+  right: 6px;
+  color: var(--color-ink-dim);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: var(--color-ink);
+}
+
+/* Site pins ---------------------------------------------------------------- */
+
+.site-marker {
+  border: 0;
+  background: transparent;
+}
+
+.site-marker__ring {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--marker-color, var(--color-plasma));
+  transform-origin: 50% 96%;
+  filter: drop-shadow(0 2px 5px rgb(0 0 0 / 0.6));
+}
+
+.site-marker__ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.site-marker__ring--active {
+  animation: site-marker-pulse 1.9s ease-in-out infinite;
+  filter:
+    drop-shadow(0 2px 5px rgb(0 0 0 / 0.65))
+    drop-shadow(0 0 7px currentColor);
+}
+
+@keyframes site-marker-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+}
+
+/* Range inputs ------------------------------------------------------------- */
+
+input[type='range'] {
+  height: 18px;
+  accent-color: var(--color-plasma);
+  cursor: pointer;
+}
+
+/* ============================================================================
+   Orbit loader
+   Pure-CSS waiting state used for NASA CMR round trips. Two counter-rotating
+   satellites orbit a bright core; the global reduced-motion rule collapses the
+   keyframe durations so the loader becomes a static diagram.
+   ========================================================================== */
+
+.orbit-loader {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.orbit-loader__ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(56 189 248 / 0.28);
+  border-radius: 999px;
+}
+
+.orbit-loader__ring--inner {
+  inset: 0.8rem;
+  border-color: rgb(245 196 81 / 0.3);
+}
+
+.orbit-loader__orbit {
+  position: absolute;
+  inset: 0;
+  animation: orbit-loader-spin 1.8s linear infinite;
+}
+
+.orbit-loader__orbit--reverse {
+  inset: 0.8rem;
+  animation-duration: 2.6s;
+  animation-direction: reverse;
+}
+
+.orbit-loader__satellite {
+  position: absolute;
+  top: -2.5px;
+  left: calc(50% - 2.5px);
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background-color: var(--color-plasma);
+  box-shadow: 0 0 8px var(--color-plasma);
+}
+
+.orbit-loader__satellite--gold {
+  background-color: var(--color-solar);
+  box-shadow: 0 0 8px var(--color-solar);
+}
+
+.orbit-loader__core {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background-color: var(--color-ink);
+  box-shadow: 0 0 10px rgb(232 238 249 / 0.8);
+}
+
+@keyframes orbit-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================================
+   Citation drawer
+   Visibility flips instantly on open — so the panel is focusable in the same
+   frame the effect runs — while the exit keeps its slide because the hidden
+   state is delayed until the transform has finished.
+   ========================================================================== */
+
+.citation-scrim {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 300ms ease,
+    visibility 0s linear 300ms;
+}
+
+.citation-scrim[data-open='true'] {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 300ms ease,
+    visibility 0s linear 0s;
+}
+
+.citation-drawer {
+  visibility: hidden;
+  transform: translateX(100%);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 300ms;
+}
+
+.citation-drawer[data-open='true'] {
+  visibility: visible;
+  transform: translateX(0);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+
+/* ============================================================================
+   Workspace panel transition
+   Each tab mounts a fresh panel, so a short rise-in reads as navigation rather
+   than a hard swap. Transform + opacity only, so it stays composited.
+   ========================================================================== */
+
+.workspace-panel {
+  animation: workspace-panel-enter 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes workspace-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================================
+   Mission brief print theme
+   Only the brief is printed; app chrome, weight controls and the ranking list
+   are hidden so the export reads as a formal NASA-style document.
+   ========================================================================== */
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  body::before {
+    display: none !important;
+  }
+
+  body:has([data-mission-brief]) {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #0f172a;
+  }
+
+  body:has([data-mission-brief]) header,
+  body:has([data-mission-brief]) aside,
+  body:has([data-mission-brief]) [role='tablist'],
+  body:has([data-mission-brief]) footer {
+    display: none !important;
+  }
+
+  [data-mission-brief] {
+    max-width: none !important;
+    border: 0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10.5pt;
+    padding: 0 !important;
+  }
+
+  [data-mission-brief] :where(h3, h4, p, li, span, strong, ol, ul) {
+    color: #0f172a !important;
+  }
+
+  [data-mission-brief] :where(h3, h4) {
+    color: #0b3d91 !important;
+  }
+
+  [data-mission-brief] a {
+    color: #0b3d91 !important;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+  }
+
+  [data-mission-brief] :where(div, ul, ol, li, section, article) {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  [data-mission-brief] svg text {
+    fill: #334155 !important;
+  }
+
+  [data-mission-brief] li,
+  [data-mission-brief] p {
+    break-inside: avoid;
+  }
+}
+
+/* ============================================================================
+   Realistic Earth Analogue Map Markers & Floating Cards
+   ========================================================================== */
+
+/* ============================================================================
+   Cinematic Documentary Aesthetics
+   ========================================================================== */
+.cinematic-grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+@keyframes slowAmbientDrift {
+  0% { transform: scale(1.01) translate(0, 0); }
+  50% { transform: scale(1.04) translate(-0.8%, -0.4%); }
+  100% { transform: scale(1.01) translate(0, 0); }
+}
+
+.ambient-drift {
+  animation: slowAmbientDrift 30s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.earth-analog-marker {
+  background: transparent;
+  border: none;
+}
+
+.earth-marker-wrapper {
+  position: relative;
+  width: 32px;
+  height: 40px;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.earth-marker-pin {
+  position: relative;
+  z-index: 2;
+  width: 32px;
+  height: 40px;
+  transform-origin: 16px 38px;
+  transition: transform 0.15s ease-out;
+}
+
+.earth-marker-wrapper:hover .earth-marker-pin {
+  transform: scale(1.08);
+}
+
+.earth-marker-card {
+  position: absolute;
+  left: 36px;
+  top: 14px;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #0b1120;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: border-color 0.15s ease-out;
+}
+
+.earth-marker-wrapper:hover .earth-marker-card {
+  border-color: #64748b;
+  background: #0f172a;
+}
+
