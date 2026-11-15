@@ -91,8 +91,8 @@ export function DiscoverView({ onCompareTarget }: { onCompareTarget: (targetId: 
         className="rounded-xl border border-hairline bg-panel/70 px-5 py-12 text-center text-sm text-ink-muted"
       >
         {loadError
-          ? 'Could not load the global NASA analog grid.'
-          : 'Loading global NASA analog grid…'}
+          ? 'Could not load the global analog grid.'
+          : 'Loading global analog grid…'}
       </div>
     )
   }
@@ -181,7 +181,7 @@ function DiscoverMap({
         </h2>
         <p className="mt-1 max-w-3xl text-sm leading-relaxed text-ink-muted">
           We scored all {CELLS.length.toLocaleString()} land areas on Earth (1° cells) using real
-          NASA satellite measurements, not hand-picked sites. Bright spots are the closest match.
+          orbital satellite measurements, not hand-picked sites. Bright spots are the closest match.
         </p>
       </div>
 
@@ -383,7 +383,7 @@ function DiscoverMap({
                 className="inline-flex items-center gap-1.5 rounded-lg border border-plasma/40 bg-plasma/10 px-3 py-1.5 text-xs font-semibold text-plasma hover:bg-plasma/20"
               >
                 <ExternalLink className="size-3.5" aria-hidden="true" />
-                See it in NASA Worldview
+                See it in Worldview
               </a>
               <button
                 type="button"

@@ -14,62 +14,17 @@ import { useState } from 'react'
 import { ALL_CITATIONS } from '../../data/citations'
 import type { WorkspaceTab } from './TabNavigation'
 
-export function NasaLogo({ className = 'size-8' }: { className?: string }) {
+export function ExplorerLogo({ className = 'size-8' }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 120 100"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="NASA Logo"
+    <div
+      className={`grid place-items-center rounded-lg border border-sky-500/30 bg-sky-950/40 text-sky-400 shadow-sm ${className}`}
+      aria-label="Terra Analogues Logo"
     >
-      <defs>
-        <clipPath id="nasaCircleNav">
-          <circle cx="58" cy="50" r="46" />
-        </clipPath>
-      </defs>
-      <circle cx="58" cy="50" r="46" fill="#0b3d91" />
-      <g fill="#ffffff" opacity="0.95" clipPath="url(#nasaCircleNav)">
-        <circle cx="28" cy="35" r="1.3" />
-        <circle cx="38" cy="22" r="1" />
-        <circle cx="52" cy="18" r="1.5" />
-        <circle cx="78" cy="25" r="1.2" />
-        <circle cx="88" cy="38" r="1.6" />
-        <circle cx="24" cy="55" r="1.2" />
-        <circle cx="34" cy="68" r="1.4" />
-        <circle cx="75" cy="74" r="1.3" />
-        <circle cx="86" cy="62" r="1.1" />
-        <circle cx="48" cy="80" r="1" />
-        <circle cx="64" cy="84" r="1.4" />
-      </g>
-      <ellipse
-        cx="58"
-        cy="50"
-        rx="50"
-        ry="21"
-        fill="none"
-        stroke="#ffffff"
-        strokeWidth="2.2"
-        transform="rotate(-28 58 50)"
-      />
-      <path
-        d="M 14 62 L 68 24 L 62 44 L 108 34 L 56 60 L 60 48 Z"
-        fill="#fc3d21"
-      />
-      <text
-        x="58"
-        y="58"
-        fill="#ffffff"
-        fontSize="24"
-        fontWeight="900"
-        fontFamily="'Helvetica Neue', Helvetica, Arial, sans-serif"
-        letterSpacing="2"
-        textAnchor="middle"
-      >
-        NASA
-      </text>
-    </svg>
+      <Orbit className="size-5" />
+    </div>
   )
 }
+export const NasaLogo = ExplorerLogo
 
 interface NavbarProps {
   activeView: 'home' | 'story' | 'workspace'
@@ -119,7 +74,7 @@ export function Navbar({
             onClick={onNavigateHome}
             className="flex items-center gap-2.5 text-left transition-opacity hover:opacity-90"
           >
-            <NasaLogo className="size-8 shrink-0" />
+            <ExplorerLogo className="size-8 shrink-0" />
             <div className="hidden h-5 w-px bg-slate-800 sm:block" />
             <div>
               <span className="block text-sm font-semibold tracking-tight text-white sm:text-base leading-tight">
@@ -197,7 +152,7 @@ export function Navbar({
         {/* Right: Actions */}
         <div className="flex items-center gap-2">
           <span className="hidden rounded border border-slate-800 bg-slate-900 px-2.5 py-1 text-[0.625rem] font-medium text-slate-400 xl:inline-flex">
-            NASA Space Apps
+            Planetary Exploration
           </span>
 
           {/* Sources Button */}
@@ -207,7 +162,7 @@ export function Navbar({
             aria-haspopup="dialog"
             aria-expanded={citationsOpen}
             className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-800 bg-slate-900 px-2.5 text-slate-300 transition-colors hover:border-slate-700 hover:text-white text-xs font-medium"
-            title="NASA Source Datasets & Citations"
+            title="Source Datasets & Citations"
           >
             <BookOpen className="size-3.5" />
             <span>Sources</span>
@@ -313,7 +268,7 @@ export function Navbar({
             >
               <span className="flex items-center gap-2">
                 <BookOpen className="size-4" />
-                <span>NASA Source Datasets</span>
+                <span>Source Datasets</span>
               </span>
               <span className="rounded-full bg-void px-2 py-0.5 font-mono text-[0.625rem]">
                 {ALL_CITATIONS.length}

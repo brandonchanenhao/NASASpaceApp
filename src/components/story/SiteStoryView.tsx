@@ -3,10 +3,10 @@ import {
   ChevronDown,
   Globe,
   Layers,
+  MapPin,
   Orbit,
-  SlidersHorizontal,
 } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { SITE_STORIES, type SiteStory } from '../../data/story_dataset'
 import { formatCoordinate } from '../../utils/formatters'
 
@@ -19,153 +19,6 @@ interface SiteStoryViewProps {
 }
 
 type ChapterId = 'prologue' | 'comparison'
-
-/** Interactive Wipe Slider for Earth vs. Space comparison */
-function InteractiveImageSlider({
-  earthImg,
-  earthTitle,
-  earthSubtitle,
-  planetaryImg,
-  planetaryTitle,
-  planetarySubtitle,
-}: {
-  earthImg: string
-  earthTitle: string
-  earthSubtitle: string
-  planetaryImg: string
-  planetaryTitle: string
-  planetarySubtitle: string
-}) {
-  const [sliderPos, setSliderPos] = useState(50) // percentage 0 to 100
-  const [isDragging, setIsDragging] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  const handleMove = useCallback((clientX: number) => {
-    if (!containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const x = clientX - rect.left
-    const percent = Math.max(0, Math.min(100, (x / rect.width) * 100))
-    setSliderPos(percent)
-  }, [])
-
-  useEffect(() => {
-    function handlePointerMove(e: MouseEvent) {
-      if (!isDragging) return
-      handleMove(e.clientX)
-    }
-
-    function handlePointerUp() {
-      setIsDragging(false)
-    }
-
-    function handleTouchMove(e: TouchEvent) {
-      if (!isDragging || !e.touches[0]) return
-      handleMove(e.touches[0].clientX)
-    }
-
-    if (isDragging) {
-      window.addEventListener('mousemove', handlePointerMove)
-      window.addEventListener('mouseup', handlePointerUp)
-      window.addEventListener('touchmove', handleTouchMove)
-      window.addEventListener('touchend', handlePointerUp)
-    }
-
-    return () => {
-      window.removeEventListener('mousemove', handlePointerMove)
-      window.removeEventListener('mouseup', handlePointerUp)
-      window.removeEventListener('touchmove', handleTouchMove)
-      window.removeEventListener('touchend', handlePointerUp)
-    }
-  }, [isDragging, handleMove])
-
-  return (
-    <div className="relative mx-auto w-full max-w-5xl overflow-hidden rounded-xl border border-slate-800 bg-slate-950 shadow-2xl">
-      {/* Container */}
-      <div
-        ref={containerRef}
-        onMouseDown={(e) => {
-          setIsDragging(true)
-          handleMove(e.clientX)
-        }}
-        onTouchStart={(e) => {
-          setIsDragging(true)
-          if (e.touches[0]) handleMove(e.touches[0].clientX)
-        }}
-        className="relative aspect-[16/9] w-full cursor-ew-resize select-none overflow-hidden sm:aspect-[21/10]"
-      >
-        {/* Layer 1: Planetary Counterpart (Bottom Layer) */}
-        <div className="absolute inset-0 h-full w-full">
-          <img
-            src={planetaryImg}
-            alt={planetaryTitle}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-          <div className="absolute bottom-5 right-5 text-right">
-            <span className="rounded bg-black/80 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-orange-400 border border-orange-500/30">
-              Extraterrestrial Twin
-            </span>
-            <h4 className="mt-2 text-sm sm:text-base font-bold text-white drop-shadow">
-              {planetaryTitle}
-            </h4>
-            <p className="text-xs text-slate-300 drop-shadow max-w-xs ml-auto">
-              {planetarySubtitle}
-            </p>
-          </div>
-        </div>
-
-        {/* Layer 2: Earth Analogue Site (Clipped Layer) */}
-        <div
-          className="absolute inset-0 h-full w-full overflow-hidden"
-          style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
-        >
-          <img
-            src={earthImg}
-            alt={earthTitle}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-          <div className="absolute bottom-5 left-5 text-left">
-            <span className="rounded bg-black/80 px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-sky-400 border border-sky-500/30">
-              Earth Analogue Site
-            </span>
-            <h4 className="mt-2 text-sm sm:text-base font-bold text-white drop-shadow">
-              {earthTitle}
-            </h4>
-            <p className="text-xs text-slate-300 drop-shadow max-w-xs">
-              {earthSubtitle}
-            </p>
-          </div>
-        </div>
-
-        {/* Vertical Divider Line with Grab Handle */}
-        <div
-          className="pointer-events-none absolute bottom-0 top-0 w-0.5 bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
-          style={{ left: `${sliderPos}%` }}
-        >
-          <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex size-9 items-center justify-center rounded-full border-2 border-white bg-slate-900/90 text-white shadow-xl backdrop-blur-md">
-            <SlidersHorizontal className="size-4 rotate-90" />
-          </div>
-        </div>
-      </div>
-
-      {/* Instruction bar below slider */}
-      <div className="flex items-center justify-between border-t border-slate-800/80 bg-slate-900/90 px-4 py-2.5 text-xs text-slate-400">
-        <span className="flex items-center gap-1.5 font-medium text-slate-300">
-          <span className="size-2 rounded-full bg-sky-400" />
-          Earth Analogue
-        </span>
-        <span className="text-[0.6875rem] uppercase tracking-wider text-slate-500">
-          Drag slider horizontally to reveal cosmic twin
-        </span>
-        <span className="flex items-center gap-1.5 font-medium text-slate-300">
-          Planetary Counterpart
-          <span className="size-2 rounded-full bg-orange-400" />
-        </span>
-      </div>
-    </div>
-  )
-}
 
 /** Bite-sized documentary storylines */
 const DOCUMENTARY_PROFILES: Record<
@@ -182,8 +35,8 @@ const DOCUMENTARY_PROFILES: Record<
   }
 > = {
   'la-corona': {
-    heroTitle: 'THE VOLCANIC UNDERWORLD',
-    heroSubtitle: 'La Corona Lava Tube · Lanzarote, Canary Islands',
+    heroTitle: 'LA CORONA LAVA TUBE',
+    heroSubtitle: 'Lanzarote, Canary Islands, Spain · Subterranean Basaltic Shield',
     discoveryQuote:
       'Beneath the frozen black lava of Lanzarote lies a 7.6-kilometer subterranean corridor carved by ancient fire.',
     storyOverview:
@@ -225,8 +78,8 @@ const DOCUMENTARY_PROFILES: Record<
   },
 
   'kilbourne-hole': {
-    heroTitle: 'WINDOW TO THE DEEP CRUST',
-    heroSubtitle: 'Kilbourne Hole Maar · New Mexico, USA',
+    heroTitle: 'KILBOURNE HOLE MAAR',
+    heroSubtitle: 'Potrillo Volcanic Field, New Mexico, USA · Mantle Xenoliths & Inverted Stratigraphy',
     discoveryQuote:
       'A violent subterranean steam explosion blasted through the desert floor, turning geological layers inside-out.',
     storyOverview:
@@ -268,8 +121,8 @@ const DOCUMENTARY_PROFILES: Record<
   },
 
   'pajonales': {
-    heroTitle: 'LIFE INSIDE SALT CRYSTALS',
-    heroSubtitle: 'Salar de Pajonales · Atacama Desert, Chile',
+    heroTitle: 'SALAR DE PAJONALES',
+    heroSubtitle: 'Atacama Desert, Antofagasta, Chile · High-Altitude Evaporite Salt Basin',
     discoveryQuote:
       'At 3,500 meters under lethal ultraviolet skies, microbial life survives hidden inside translucent salt crystals.',
     storyOverview:
@@ -311,8 +164,8 @@ const DOCUMENTARY_PROFILES: Record<
   },
 
   'dallol': {
-    heroTitle: 'THE ACID SPRINGS OF EARLY MARS',
-    heroSubtitle: 'Dallol Geothermal Field · Danakil Depression, Ethiopia',
+    heroTitle: 'DALLOL HYDROTHERMAL FIELD',
+    heroSubtitle: 'Danakil Depression, Afar Region, Ethiopia · Hyper-Acidic Geothermal Springs',
     discoveryQuote:
       'Neon-yellow boiling acid pools and towering salt chimneys mirror the volcanic hydrothermal systems of early Mars.',
     storyOverview:
@@ -354,8 +207,8 @@ const DOCUMENTARY_PROFILES: Record<
   },
 
   'hanksville': {
-    heroTitle: 'THE ANCIENT INVERTED RIVERS',
-    heroSubtitle: 'Hanksville Inverted Channels · Utah, USA',
+    heroTitle: 'HANKSVILLE BADLANDS',
+    heroSubtitle: 'San Rafael Desert, Utah, USA · Ancient Inverted Paleoriver Channels',
     discoveryQuote:
       'Ancient riverbeds now stand elevated as stone ridges above the desert—sculpted by millions of years of wind.',
     storyOverview:
@@ -397,8 +250,8 @@ const DOCUMENTARY_PROFILES: Record<
   },
 
   'adventdalen': {
-    heroTitle: 'THE CRYOGENIC PERMAFROST',
-    heroSubtitle: 'Adventdalen Valley · Svalbard, Norway',
+    heroTitle: 'ADVENTDALEN PERMAFROST VALLEY',
+    heroSubtitle: 'Spitsbergen, Svalbard, Norway · High-Arctic Cryogenic Ground Ice',
     discoveryQuote:
       'Deep in the Arctic archipelago of Svalbard, thick permafrost locks ancient ground ice beneath the frozen tundra.',
     storyOverview:
@@ -449,7 +302,7 @@ export function SiteStoryView({
   const story: SiteStory = SITE_STORIES[siteId] ?? SITE_STORIES['la-corona']
   const profile =
     DOCUMENTARY_PROFILES[siteId] ?? DOCUMENTARY_PROFILES['la-corona']
-  const { site, comparison } = story
+  const { site } = story
 
   // Chapter navigation & active chapter tracker
   const [activeChapter, setActiveChapter] = useState<ChapterId>('prologue')
@@ -600,7 +453,7 @@ export function SiteStoryView({
             <div className="flex items-center gap-3">
               <span className="inline-block size-2 rounded-full bg-orange-500 animate-pulse" />
               <span className="uppercase tracking-widest text-slate-200">
-                NASA Planetary Analogue Expedition
+                Planetary Analogue Expedition
               </span>
             </div>
             <div className="flex items-center gap-4 text-slate-400">
@@ -613,19 +466,21 @@ export function SiteStoryView({
 
         {/* Center: Grand Documentary Editorial Title */}
         <div className="relative z-10 mx-auto max-w-4xl py-6 text-center sm:py-12">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-orange-400 sm:text-sm">
-            Chapter I · Terrestrial Expedition
-          </span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-orange-400">
+            <span className="size-1.5 rounded-full bg-orange-400 animate-ping" />
+            <span>Chapter I · Terrestrial Analogue Expedition</span>
+          </div>
 
-          <h1 className="mt-2 text-3xl font-extrabold uppercase tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 text-3xl font-extrabold uppercase tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] sm:text-5xl lg:text-6xl">
             {profile.heroTitle}
           </h1>
 
-          <p className="mt-2 text-sm font-medium uppercase tracking-wider text-slate-300 sm:text-base">
-            {profile.heroSubtitle}
+          <p className="mt-3 flex items-center justify-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-sky-400 sm:text-base">
+            <MapPin className="size-4 shrink-0 text-sky-400" />
+            <span>{profile.heroSubtitle}</span>
           </p>
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-relaxed text-slate-200 drop-shadow sm:text-base">
+          <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-relaxed text-slate-200 drop-shadow sm:text-base italic">
             &quot;{profile.discoveryQuote}&quot;
           </p>
 
@@ -683,16 +538,6 @@ export function SiteStoryView({
               Direct comparison between Earth's terrestrial analogue and its extraterrestrial counterpart, highlighting environmental fidelity and key physical differences.
             </p>
           </div>
-
-          {/* The Interactive Wipe Slider */}
-          <InteractiveImageSlider
-            earthImg={comparison.earthImageUrl}
-            earthTitle={comparison.earthFeatureTitle}
-            earthSubtitle={comparison.earthFeatureDescription}
-            planetaryImg={comparison.planetaryImageUrl}
-            planetaryTitle={comparison.planetaryFeatureTitle}
-            planetarySubtitle={comparison.planetaryFeatureDescription}
-          />
 
           {/* Concise Scientific Contrast: Similarities vs Differences */}
           <div className="mx-auto mt-6 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
@@ -819,8 +664,8 @@ export function SiteStoryView({
 
           {/* Copyright / Hackathon Stamp */}
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-slate-800/80 pt-6 text-[0.6875rem] text-slate-400 font-mono">
-            <span>NASA Space Apps Challenge · Terra Analogues</span>
-            <span>All telemetry sourced from NASA GIBS, SRTM, ASTER GDEM, MODIS</span>
+            <span>Terra Analogues · Planetary Exploration</span>
+            <span>All telemetry sourced from GIBS, SRTM, ASTER GDEM, MODIS</span>
           </div>
         </div>
       </footer>

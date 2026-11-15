@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { NasaLogo } from '../layout/Navbar'
+import { ExplorerLogo } from '../layout/Navbar'
 
 interface AboutModalProps {
   open: boolean
@@ -27,13 +27,13 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         </button>
 
         <div className="flex items-center gap-3">
-          <NasaLogo className="size-9" />
+          <ExplorerLogo className="size-9" />
           <div>
             <h2 id="about-dialog-title" className="text-base font-semibold text-white">
               Terra Analogues
             </h2>
             <p className="text-xs text-slate-400 font-medium">
-              LunaTerraMars Explorer · NASA Space Apps
+              LunaTerraMars Explorer · Planetary Analogs
             </p>
           </div>
         </div>
@@ -90,7 +90,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           </div>
 
           <p className="text-[0.6875rem] text-slate-500">
-            All telemetry and imagery sourced from NASA GIBS, SRTM, ASTER GDEM, MODIS, and MERRA-2 archives.
+            All telemetry and imagery sourced from GIBS, SRTM, ASTER GDEM, MODIS, and MERRA-2 archives.
           </p>
         </div>
 

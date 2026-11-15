@@ -98,7 +98,7 @@ function buildMarkdown(
   const lines: string[] = [
     `# LunaTerraMars Mission Brief — ${earthSite.name} ↔ ${targetSite.name}`,
     '',
-    `Generated ${generatedOn} · 2026 NASA Space Apps Challenge · Earth analogs for permanent lunar and Martian base siting.`,
+    `Generated ${generatedOn} · Earth analogs for permanent lunar and Martian base siting.`,
     '',
     '## Pairing',
     '',
@@ -171,7 +171,7 @@ function buildMarkdown(
     ),
     '',
     '---',
-    'All planetary data courtesy of NASA science missions and archives: GIBS, Moon Trek, Mars Trek and the Common Metadata Repository.',
+    'All planetary data courtesy of planetary science missions and archives: GIBS, Moon Trek, Mars Trek and the Common Metadata Repository.',
     '',
   ]
   return lines.join('\n')
@@ -335,7 +335,7 @@ export function MissionBriefExport({
               pairing
             </h3>
             <p className="mt-0.5 text-[0.625rem] text-ink-dim print:text-slate-600">
-              Generated {generatedOn} · NASA Space Apps 2026
+              Generated {generatedOn} · Planetary Base Siting
             </p>
           </div>
         </div>
@@ -644,7 +644,7 @@ export function MissionBriefExport({
 
       <div className="mt-2">
         <p className="text-[0.5625rem] font-semibold uppercase tracking-[0.1em] text-ink-dim print:text-slate-500">
-          Citations · {citations.length} NASA datasets
+          Citations · {citations.length} datasets
         </p>
         <ul className="mt-1 grid gap-1 sm:grid-cols-2">
           {citations.map((citation) => (
@@ -673,7 +673,7 @@ export function MissionBriefExport({
 
       <p className="mt-2 border-t border-hairline pt-1.5 text-[0.5625rem] leading-relaxed text-ink-dim print:border-slate-300 print:text-slate-600">
         Scores combine the seven normalized dimensions with the mission weights
-        above. All planetary values derive from NASA GIBS, Moon Trek, Mars Trek
+        above. All planetary values derive from GIBS, Moon Trek, Mars Trek
         and CMR products; breakdown physics and mitigations are cited in the
         comparison dashboard.
       </p>

@@ -86,7 +86,7 @@ export function Header({
 
         <div className="ml-auto flex items-center gap-2">
           <span className="hidden rounded-full border border-solar/40 bg-solar/10 px-3 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-solar md:inline-flex">
-            NASA Space Apps 2026
+            Space Exploration 2026
           </span>
 
           <button
@@ -95,8 +95,8 @@ export function Header({
             aria-haspopup="dialog"
             aria-expanded={citationsOpen}
             aria-controls="citation-drawer"
-            aria-label="Open NASA source citations"
-            title="NASA source citations"
+            aria-label="Open source citations"
+            title="Source citations"
             className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-hairline bg-elevated px-2.5 text-ink-muted transition-colors hover:border-plasma/40 hover:text-plasma"
           >
             <BookOpen className="size-4" strokeWidth={2} aria-hidden="true" />
@@ -139,7 +139,7 @@ export function Header({
           dimensions
         </p>
         <p className="rounded-lg border border-solar/40 bg-solar/10 px-2 py-1.5 text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-solar">
-          NASA Space Apps 2026
+          Space Exploration 2026
         </p>
       </div>
     </header>

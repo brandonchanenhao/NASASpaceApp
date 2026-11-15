@@ -203,8 +203,8 @@ function App() {
 
               <footer className="border-t border-hairline bg-panel/80 px-4 py-2.5">
                 <p className="text-[0.6875rem] text-ink-dim">
-                  Built for the 2026 NASA Space Apps Challenge. All planetary data
-                  courtesy of NASA science missions: GIBS, Moon Trek, Mars Trek and CMR.
+                  Earth analog discovery for planetary base siting. All planetary data
+                  courtesy of science missions: GIBS, Moon Trek, Mars Trek and CMR.
                 </p>
               </footer>
             </div>

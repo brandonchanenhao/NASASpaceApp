@@ -178,7 +178,7 @@ export function ComparisonDashboard({
           </h3>
           <p className="mt-0.5 max-w-3xl text-[0.6875rem] leading-relaxed text-ink-muted">
             {pairing.testbedApplications.length} campaigns hosted by{' '}
-            {earthSite.name} for {targetSite.name}, with NASA TRL readiness and
+            {earthSite.name} for {targetSite.name}, with TRL readiness and
             the physics limits that still require chamber or orbital testing.
           </p>
         </div>

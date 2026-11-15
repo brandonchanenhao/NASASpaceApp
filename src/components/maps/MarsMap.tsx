@@ -43,7 +43,7 @@ export function MarsMap({
   return (
     <div
       role="region"
-      aria-label="Mars base-site map with NASA Mars Trek imagery"
+      aria-label="Mars base-site map with Mars Trek imagery"
       className="relative h-full w-full"
     >
       <MapContainer

@@ -495,7 +495,7 @@ function LavaTubeDiagram() {
         <div className="mt-3 flex items-start gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-3 text-xs leading-relaxed text-slate-400">
           <Zap className="mt-0.5 size-4 shrink-0 text-sky-400" />
           <p>
-            <strong className="text-slate-200">Terrestrial Analogue Ground Truth:</strong> At Lanzarote’s La Corona volcanic system (Cueva de los Verdes), basaltic roof rock reaches 8 to 15 meters in thickness. ESA PANGAEA and NASA PSTAR use this subterranean labyrinth to demonstrate that pyroxene-rich basalt stops 99.9% of ionizing radiation while dampening surface temperature extremes into an ultra-stable 18°C subterranean microclimate.
+            <strong className="text-slate-200">Terrestrial Analogue Ground Truth:</strong> At Lanzarote’s La Corona volcanic system (Cueva de los Verdes), basaltic roof rock reaches 8 to 15 meters in thickness. ESA PANGAEA and PSTAR research teams use this subterranean labyrinth to demonstrate that pyroxene-rich basalt stops 99.9% of ionizing radiation while dampening surface temperature extremes into an ultra-stable 18°C subterranean microclimate.
           </p>
         </div>
       </div>

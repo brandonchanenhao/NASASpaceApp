@@ -171,7 +171,7 @@ export const ALL_CITATIONS: readonly Citation[] = CITATION_LIST
 export function getCitation(id: string): Citation {
   const citation = CITATIONS[id]
   if (!citation) {
-    throw new Error(`Unknown NASA citation id: ${id}`)
+    throw new Error(`Unknown citation id: ${id}`)
   }
   return citation
 }

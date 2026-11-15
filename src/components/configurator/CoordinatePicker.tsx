@@ -120,12 +120,12 @@ function cmrConceptUrl(conceptId: string): string {
 }
 
 const STATUS_COPY: Record<string, string> = {
-  idle: 'Enter a coordinate or choose a quick pick, then sample the NASA catalog at that point.',
-  loading: 'Querying NASA CMR collections at this coordinate…',
+  idle: 'Enter a coordinate or choose a quick pick, then sample the catalog at that point.',
+  loading: 'Querying CMR collections at this coordinate…',
   offline:
-    'NASA CMR is unreachable from this network. The keyless Worldview link below still resolves against GIBS imagery.',
+    'CMR is unreachable from this network. The keyless Worldview link below still resolves against GIBS imagery.',
   empty:
-    'No CMR collection page intersects this point. Open ocean, ice sheet and dense forest coordinates often have no local granule hits; try a quick pick over a NASA calibration site.',
+    'No CMR collection page intersects this point. Open ocean, ice sheet and dense forest coordinates often have no local granule hits; try a quick pick over a primary calibration site.',
 }
 
 /**
@@ -174,7 +174,7 @@ export function CoordinatePicker() {
     : null
   const statusCopy =
     query.status === 'success' && query.data
-      ? `NASA CMR returned ${query.data.collections.length} collections intersecting this point; recent granules for the top collection are listed below.`
+      ? `CMR returned ${query.data.collections.length} collections intersecting this point; recent granules for the top collection are listed below.`
       : STATUS_COPY[query.status]
 
   return (
@@ -191,7 +191,7 @@ export function CoordinatePicker() {
             Sample an unlisted Earth coordinate
           </h3>
           <p className="mt-0.5 text-[0.6875rem] leading-relaxed text-ink-muted">
-            Query the NASA Common Metadata Repository for collections and
+            Query the Common Metadata Repository for collections and
             recent granules intersecting any point, with keyless Worldview and
             Earthdata Search deep links.
           </p>
@@ -297,7 +297,7 @@ export function CoordinatePicker() {
       <div aria-live="polite" className="relative mt-2 space-y-2">
         {query.status === 'loading' && coordinate ? (
           <LoadingOverlay
-            detail={`NASA CMR point query at ${coordinate.lat.toFixed(3)}°, ${coordinate.lon.toFixed(3)}°`}
+            detail={`CMR point query at ${coordinate.lat.toFixed(3)}°, ${coordinate.lon.toFixed(3)}°`}
           />
         ) : null}
         <p
@@ -335,7 +335,7 @@ export function CoordinatePicker() {
                     strokeWidth={2}
                     aria-hidden="true"
                   />
-                  NASA Worldview
+                  Worldview
                   <ExternalLink
                     className="size-2.5"
                     strokeWidth={2}

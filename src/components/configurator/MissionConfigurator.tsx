@@ -208,7 +208,7 @@ export function MissionConfigurator({
 
           <details className="rounded-xl border border-hairline bg-panel/40 p-3">
             <summary className="cursor-pointer text-sm font-semibold text-ink-muted hover:text-plasma">
-              Check any Earth coordinate against NASA data
+              Check any Earth coordinate against planetary data
             </summary>
             <div className="mt-3">
               <CoordinatePicker />

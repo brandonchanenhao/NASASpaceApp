@@ -43,7 +43,7 @@ export function MoonMap({
   return (
     <div
       role="region"
-      aria-label="Moon base-site map with NASA Moon Trek imagery"
+      aria-label="Moon base-site map with Moon Trek imagery"
       className="relative h-full w-full"
     >
       <MapContainer

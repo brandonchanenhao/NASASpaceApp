@@ -48,7 +48,7 @@ export function DualMapView({
             Earth analog paired with its {BODY_LABELS[activeBody]} target
           </h2>
           <p className="mt-1 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
-            NASA GIBS true-color and geophysical imagery on the left, NASA{' '}
+            GIBS true-color and geophysical imagery on the left,{' '}
             {BODY_LABELS[activeBody]} Trek products on the right. Selecting a
             pin re-scores the pairing and highlights the best counterpart on the
             opposite map.

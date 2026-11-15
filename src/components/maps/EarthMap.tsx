@@ -54,7 +54,7 @@ export function EarthMap({
   return (
     <div
       role="region"
-      aria-label="Earth analog map with NASA GIBS imagery"
+      aria-label="Earth analog map with GIBS imagery"
       className="relative h-full w-full"
     >
       <MapContainer

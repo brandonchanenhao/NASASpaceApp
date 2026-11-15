@@ -49,7 +49,7 @@ const BODY_ICONS: Record<CelestialBody, LucideIcon> = {
  */
 const ARCHIVE_LINKS: readonly ArchiveLink[] = [
   {
-    label: 'NASA Worldview',
+    label: 'Worldview',
     detail: 'Browse corrected-reflectance and LST imagery at any coordinate',
     url: 'https://worldview.earthdata.nasa.gov/',
     Icon: Satellite,
@@ -211,7 +211,7 @@ export function CitationDrawer({ open, onClose }: CitationDrawerProps) {
               id="citation-drawer-heading"
               className="mt-0.5 text-sm font-semibold"
             >
-              NASA source catalog
+              Scientific source catalog
             </h2>
             <p className="mt-0.5 text-[0.6875rem] leading-relaxed text-ink-muted">
               {ALL_CITATIONS.length} instrument datasets across Earth, the Moon
@@ -223,8 +223,8 @@ export function CitationDrawer({ open, onClose }: CitationDrawerProps) {
             type="button"
             ref={closeRef}
             onClick={onClose}
-            aria-label="Close NASA source catalog"
-            title="Close NASA source catalog"
+            aria-label="Close scientific source catalog"
+            title="Close scientific source catalog"
             className="grid size-7 shrink-0 place-items-center rounded-lg border border-hairline bg-panel text-ink-muted transition-colors hover:border-plasma/40 hover:text-plasma"
           >
             <X className="size-3.5" strokeWidth={2} aria-hidden="true" />
@@ -315,7 +315,7 @@ export function CitationDrawer({ open, onClose }: CitationDrawerProps) {
               id="citation-archives-heading"
               className="text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-ink"
             >
-              Primary NASA archives
+              Primary scientific archives
             </h3>
             <ul className="mt-1.5 grid gap-1 sm:grid-cols-2">
               {ARCHIVE_LINKS.map(({ label, detail, url, Icon }) => (
@@ -348,7 +348,7 @@ export function CitationDrawer({ open, onClose }: CitationDrawerProps) {
           </section>
 
           <p className="mt-3 border-t border-hairline pt-2 text-[0.5625rem] leading-relaxed text-ink-dim">
-            Values are derived from NASA GIBS, Moon Trek, Mars Trek and Common
+            Values are derived from GIBS, Moon Trek, Mars Trek and Common
             Metadata Repository products. DOIs resolve to the peer-reviewed
             product descriptions where the mission publishes one.
           </p>

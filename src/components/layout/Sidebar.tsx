@@ -77,7 +77,7 @@ export function Sidebar({
           </p>
           <h2 className="mt-1 text-sm font-semibold">
             {earthSites.length + moonSites.length + marsSites.length}{' '}
-            NASA-characterized sites
+            characterized analog sites
           </h2>
           <p className="mt-1 text-[0.6875rem] leading-relaxed text-ink-muted">
             Badges show similarity to the counterpart selected on the maps.
